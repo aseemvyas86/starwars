@@ -4,23 +4,30 @@ import { fetchSpaceShips, fetchShipDetails } from "../actions";
 import Loading from "./Loading";
 import SpaceShipItem from "./SpaceShipItem";
 import StarCharacters from "./StarCharacters";
+import Pagination from "./Pagination";
 
 class SpaceShipList extends Component {
   componentDidMount() {
-    this.props.fetchSpaceShips();
+    const pageNumber = this.props.spaceShips.currentPage;
+    this.props.fetchSpaceShips(pageNumber);
   }
 
   getShipDetail = id => {
     this.props.fetchShipDetails(id);
   };
 
+  handlePageChange = pageNumber => {
+    this.props.fetchSpaceShips(pageNumber);
+    console.log(this.props);
+  };
+
   renderList() {
     const { spaceShips } = this.props;
-    console.log(spaceShips);
-    if (spaceShips.length === 0) {
+    const { shipAndCharacters } = spaceShips;
+    if (spaceShips.isLoading === true) {
       return <Loading />;
     } else {
-      return spaceShips.map((spaceShip, index) => {
+      return shipAndCharacters.map((spaceShip, index) => {
         if ((index + 1) % 9 === 0) {
           return (
             <React.Fragment>
@@ -44,32 +51,25 @@ class SpaceShipList extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
-      <div className="ui segment relaxed divided list">{this.renderList()}</div>
+      <React.Fragment>
+        <div className="ui segment relaxed divided list">
+          {this.renderList()}
+        </div>
+        <Pagination
+          count={37}
+          perPage={10}
+          onPageChange={this.handlePageChange}
+        />
+      </React.Fragment>
     );
   }
 }
 
-const extractId = url => {
-  let urlArray = url.split("/");
-  urlArray = urlArray.filter(el => el != "");
-  return urlArray[urlArray.length - 1];
-};
-
 const mapStateToProp = state => {
   const { spaceShips } = state;
-  let newArray = [];
-  if (spaceShips.length !== 0) {
-    const people = spaceShips[0].data.results;
-    const ships = spaceShips[1].data.results;
-    for (let i = 0; i < 10; i++) {
-      const ship = ships[i];
-      const id = extractId(ship.url);
-      newArray.push({ ...ship, nameOfCharacter: people[i].name, id: id });
-    }
-  }
-
-  return { spaceShips: newArray, shipDetail: state.shipDetail };
+  return { spaceShips: spaceShips };
 };
 
 export default connect(

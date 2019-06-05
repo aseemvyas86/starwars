@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <h2 className="ui center aligned icon header">
       <div className="ui ">
-        <img className="ui centered medium avatar image" src={banner} />
+        <img className="ui centered tiny avatar image" src={banner} />
       </div>
       <br />
       <hr />
