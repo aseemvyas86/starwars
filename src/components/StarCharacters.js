@@ -1,9 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 
-class StarCharacters extends Component {
-  render() {
-    return <div> Star wars characters</div>;
-  }
-}
+const StarCharacters = props => {
+  const { name } = props;
+  return (
+    <div className="ui ">
+      <i className="large  circular user secret icon" />
+      {name}
+    </div>
+  );
+};
 
 export default StarCharacters;
