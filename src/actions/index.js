@@ -7,18 +7,27 @@ const SHIP_API =
 
 export const fetchSpaceShips = pagenumber => {
   return async function(dispatch, state) {
-    const response = await axios.all([
-      axios.get(CHARACTER_API.concat(`?page=${pagenumber}`)),
-      axios.get(SHIP_API.concat(`?page=${pagenumber}`))
-    ]);
+    let response = [];
+    try {
+      response = await axios.all([
+        axios.get(CHARACTER_API.concat(`?page=${pagenumber}`)),
+        axios.get(SHIP_API.concat(`?page=${pagenumber}`))
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
     dispatch({ type: "FETCH_SPACESHIPS", payload: response });
   };
 };
 
 export const fetchShipDetails = id => {
   return async function(dispatch, state) {
-    const response = await axios.get(SHIP_API.concat(`/${id}/`));
-
+    let response = {};
+    try {
+      response = await axios.get(SHIP_API.concat(`/${id}/`));
+    } catch (error) {
+      console.log(error);
+    }
     dispatch({ type: "FETCH_DETAIL", payload: response });
   };
 };
