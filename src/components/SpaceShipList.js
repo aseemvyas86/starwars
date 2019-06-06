@@ -54,14 +54,23 @@ class SpaceShipList extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
+        <div style={{ textAlign: "center" }}>
+          <Pagination
+            count={this.props.spaceShips.count}
+            perPage={this.props.spaceShips.perPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
         <div className="ui segment relaxed divided list">
           {this.renderList()}
         </div>
-        <Pagination
-          count={37}
-          perPage={10}
-          onPageChange={this.handlePageChange}
-        />
+        <div style={{ textAlign: "center" }}>
+          <Pagination
+            count={this.props.spaceShips.count}
+            perPage={this.props.spaceShips.perPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
       </React.Fragment>
     );
   }

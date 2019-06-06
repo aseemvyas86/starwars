@@ -1,27 +1,5 @@
-import transform from "../utilities/transform";
-const INITIAL_STATE = {
-  perPage: 10,
-  count: null,
-  currentPage: 1,
-  ships: [],
-  characters: [],
-  shipAndCharacters: [],
-  isLoading: true
-};
+import _ from "lodash";
 
-export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case "FETCH_SPACESHIPS":
-      if (action.payload.length < 2) {
-        return { ...state };
-      }
-      const updatedState = transform.getShipAndCharacter(state, action.payload);
-      return { ...state, ...updatedState };
-    default:
-      return state;
-  }
-};
-/*
 const getShipAndCharacter = (state, payload) => {
   let characters = payload[0].data.results;
   characters = _.map(characters, "name");
@@ -53,4 +31,9 @@ const extractId = url => {
   urlArray = urlArray.filter(el => el != "");
   return urlArray[urlArray.length - 1];
 };
-*/
+
+const exportFunctions = {
+  getShipAndCharacter
+};
+
+export default exportFunctions;
