@@ -1,0 +1,2 @@
+export const FETCH_SPACESHIPS = "FETCH_SPACESHIPS";
+export const FETCH_DETAIL = "FETCH_DETAIL";

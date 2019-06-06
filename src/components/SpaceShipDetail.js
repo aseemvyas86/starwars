@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { fetchShipDetails } from "../actions";
 
 class SpaceShipDetail extends Component {
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    this.props.fetchShipDetails(id);
+  }
+
   renderDetail() {
     const { shipDetail } = this.props;
     if (Object.keys(shipDetail).length) {
@@ -47,8 +53,11 @@ class SpaceShipDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ shipDetail }) => {
-  return { shipDetail };
+const mapStateToProps = ({ spaceShips, shipDetail }) => {
+  return { spaceShips, shipDetail };
 };
 
-export default connect(mapStateToProps)(SpaceShipDetail);
+export default connect(
+  mapStateToProps,
+  { fetchShipDetails }
+)(SpaceShipDetail);
